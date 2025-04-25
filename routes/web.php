@@ -1,17 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ContactController;
 
-Route::get('/', function () {
-    return Inertia::render('welcome');
-})->name('home');
-
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
-});
-
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
+Route::get('/', [ProductController::class, 'index'])->name('home');;
+// Route untuk menampilkan daftar produk
+Route::get('/', [ProductController::class, 'index'])->name('products.index');
+// Route untuk menampilkan detail produk
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/contact', [ContactController::class, 'index']);
+Route::post('/contact', [ContactController::class, 'store']);
